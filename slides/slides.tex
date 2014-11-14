@@ -1,0 +1,90 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{multicol}
+\usetheme{Berlin}
+\setbeamercolor{palette secondary}{use=seahorse}
+\usecolortheme{seahorse}
+\title[Developing with Docker]{Developing with Docker}
+\author{\hspace{12pt}Robert Bittle\hspace{12pt}\\\hspace{12pt}robert.bittle@dominionenterprises.com\hspace{12pt}\\\hspace{12pt}github.com/guywithnose\hspace{12pt}}
+\date{December 12, 2014}
+\setbeamertemplate{itemize items}[circle]
+\begin{document}
+
+    \begin{frame}
+    \titlepage
+    \end{frame}
+
+    % \section{Intro}
+    % \begin{frame}{Who am I?}
+    %     \begin{itemize}
+    %         % Be quick, maybe cut this slide
+    %         \item robert.bittle@dominionenterprises.com
+    %         \item github.com/guywithnose
+    %     \end{itemize}
+    % \end{frame}
+    \section{Docker}
+    \subsection{What is Docker?}
+    \begin{frame}{Similar to virtual machines...}
+        % Similar to virtual machines, but without the overhead
+        % Keep this high level use an image
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.8\linewidth]{VM.jpg}
+        \end{figure}
+    \end{frame}
+    \begin{frame}{...only simpler}
+        % Similar to virtual machines, but without the overhead
+        % Keep this high level use an image
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.8\linewidth]{Docker.jpg}
+        \end{figure}
+    \end{frame}
+    % Basic comands
+    \subsection{}
+    \begin{frame}{How to run a container}
+        \alert<+>{docker run\alt<+->{$\backslash$\\}{ nginx}}
+        \alert<.>{\only<.->{\textendash\textendash detach $\backslash$\\}}
+        \alert<+>{\only<.->{\textendash\textendash volume \$(pwd):/usr/local/nginx/html $\backslash$\\}}
+        \alert<+>{\only<.->{\textendash\textendash publish 80:80 $\backslash$\\}}
+        \only<2->{nginx}
+    \end{frame}
+    \subsection{How to build an image}
+    \begin{frame}{The Dockerfile}
+        % The emphasis here is creating a reproducible environment
+        \alert<+>{}
+        \alert<+>{FROM ubuntu:14.10\\}
+        \alert<+>{RUN apt-get update \&\& apt-get install -y php5-fpm\\}
+        \alert<+>{CMD /usr/sbin/php5-fpm --nodaemonize\\}
+    \end{frame}
+    \begin{frame}{Building the Dockerfile}
+        docker build -t php5-fpm .
+    \end{frame}
+    \begin{frame}{How to link images}
+        % Ideally a docker container should run only one process This is not
+        % strictly necessary, but it is the way Docker was designed to work If
+        % your system requires more than one process (nginx, php-fpm, mongo,
+        % etc...), you will need to link your containers together so they can
+        % communicate.
+    \end{frame}
+    \section{Fig}
+    \subsection{What is Fig?}
+    \begin{frame}{}
+        % Useful for running containers in groups
+        % This is essential for development environments
+        % Keep this high level use the same image
+        % Talk about this being incorporated into docker
+    \end{frame}
+    \subsection{}
+    \begin{frame}{How to build a group}
+    \end{frame}
+    \begin{frame}{Run, stop, rebuild}
+    \end{frame}
+    % Give a full demo of an nginx, php-fpm, mongo system
+    \section{Docker in production}
+    \subsection{}
+    \begin{frame}{Modifications}
+    % ADD code instead of mounting as a volume
+    \end{frame}
+\end{document}
