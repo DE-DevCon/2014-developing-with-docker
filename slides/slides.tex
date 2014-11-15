@@ -46,7 +46,7 @@
     \begin{frame}{How to run a container}
         \alert<+>{docker run\alt<+->{$\backslash$\\}{ nginx}}
         \alert<.>{\only<.->{\textendash\textendash detach $\backslash$\\}}
-        \alert<+>{\only<.->{\textendash\textendash volume \$(pwd):/usr/local/nginx/html $\backslash$\\}}
+        \alert<+>{\only<.->{\textendash\textendash volume \$(pwd):/usr/share/nginx/html $\backslash$\\}}
         \alert<+>{\only<.->{\textendash\textendash publish 80:80 $\backslash$\\}}
         \only<2->{nginx}
     \end{frame}
