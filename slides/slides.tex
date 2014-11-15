@@ -10,9 +10,11 @@
 \date{December 12, 2014}
 \setbeamertemplate{itemize items}[circle]
 \begin{document}
-
     \begin{frame}
-    \titlepage
+        \titlepage
+        Slides and demos at:\\
+        \href{https://github.com/guywithnose/de-devcon-docker}{https://github.com/guywithnose/de-devcon-docker}\\
+        \href{https://bitly.com/1vf4jcy}{https://bitly.com/1vf4jcy}
     \end{frame}
 
     % \section{Intro}
@@ -44,11 +46,12 @@
     % Basic comands
     \subsection{Working with images and containers}
     \begin{frame}{How to run a container}
-        \alert<+>{docker run\alt<+->{$\backslash$\\}{ nginx}}
-        \alert<.>{\only<.->{\textendash\textendash detach $\backslash$\\}}
-        \alert<+>{\only<.->{\textendash\textendash volume \$(pwd):/usr/share/nginx/html $\backslash$\\}}
-        \alert<+>{\only<.->{\textendash\textendash publish 80:80 $\backslash$\\}}
-        \only<2->{nginx}
+        \alert<+>{docker run\alt<+->{ $\backslash$\\}{ nginx}}
+        \alert<.>{\only<.->{$--$detach $\backslash$\\}}
+        \alert<+>{\only<.->{$--$volume \$(pwd):/usr/share/nginx/html $\backslash$\\}}
+        \alert<+>{\only<.->{$--$publish 80:80 $\backslash$\\}}
+        \only<2->{nginx}\\
+        \only<+>{\vspace{24pt}docker run $-$d $-$v \$(pwd):/usr/share/nginx/html $-$p 80:80 nginx}
     \end{frame}
     \begin{frame}{The Dockerfile}
         % The emphasis here is creating a reproducible environment
@@ -66,24 +69,79 @@
         % your system requires more than one process (nginx, php-fpm, mongo,
         % etc...), you will need to link your containers together so they can
         % communicate.
+        docker run $-$d \alert<2>{$--$name db} mysql\\
+        docker run $-$d \alert<3>{$--$name demo-phpfpm} {$--$link} \alert<2>{db}:mysql php-fpm\\
+        docker run $-$d $--$link \alert<3>{demo-phpfpm}:phpfpm $-$p 80:80 my-nginx\\
     \end{frame}
     \section{Fig}
     \subsection{What is Fig?}
-    \begin{frame}{}
+    \begin{frame}{Docker containers in groups}
+        \begin{itemize}
+            \item Fig manages groups of linked containers
+            \item Very intuitive interface
+            \item Allows you to spin up, shutdown, and remove a container and all its dependencies with a single command
+        \end{itemize}
         % Useful for running containers in groups
         % This is essential for development environments
         % Keep this high level use the same image
         % Talk about this being incorporated into docker
     \end{frame}
     \subsection{}
+    \defverbatim[colored]\lstFigYmlNginx{
+        \begin{lstlisting}
+nginx:
+    build: .
+    volumes:
+        - .:/usr/local/nginx/html
+    links:
+        - phpfpm:phpfpm
+    ports:
+        - 80:80
+        \end{lstlisting}
+    }
+    \defverbatim[colored]\lstFigYmlPhpFpm{
+        \begin{lstlisting}
+phpfpm:
+    image: jprjr/php-fpm
+    volumes:
+        - .:/srv/http
+    links:
+        - mysql:mysql
+        \end{lstlisting}
+    }
+    \defverbatim[colored]\lstFigYmlMysql{
+        \begin{lstlisting}
+mysql:
+    image: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        \end{lstlisting}
+    }
     \begin{frame}{How to build a group}
+        \lstFigYmlNginx
+    \end{frame}
+    \begin{frame}{How to build a group}
+        \lstFigYmlPhpFpm
+    \end{frame}
+    \begin{frame}{How to build a group}
+        \lstFigYmlMysql
     \end{frame}
     \begin{frame}{Run, stop, rebuild}
+        \begin{itemize}
+            \item fig run
+            \item fig up
+            \item fig stop
+            \item fig rm
+            \item fig build
+        \end{itemize}
     \end{frame}
-    % Give a full demo of an nginx, php-fpm, mongo system
+    % Give a full demo of an nginx, php-fpm, mysql system
     \section{Docker in production}
     \subsection{}
     \begin{frame}{Modifications}
-    % ADD code instead of mounting as a volume
+        \begin{itemize}
+            \item ADD code instead of mounting as a volume
+            \item Fig can be used for scaling your apps
+        \end{itemize}
     \end{frame}
 \end{document}
