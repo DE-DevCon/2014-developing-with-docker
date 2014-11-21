@@ -44,6 +44,13 @@
         \end{figure}
     \end{frame}
     % Basic comands
+    \begin{frame}{Installation}
+        \href{https://docs.docker.com/installation/}{https://docs.docker.com/installation/}
+        \begin{itemize}
+            \item Ubuntu, Red Hat, Debian, etc - Package manager
+            \item OSX, Windows - Boot2Docker
+        \end{itemize}
+    \end{frame}
     \subsection{Working with images and containers}
     \begin{frame}{How to run a container}
         \alert<+>{docker run\alt<+->{ $\backslash$\\}{ nginx}}
@@ -53,12 +60,23 @@
         \only<2->{nginx}\\
         \only<+>{\vspace{24pt}docker run $-$d $-$v \$(pwd):/usr/share/nginx/html $-$p 80:80 nginx}
     \end{frame}
+    \begin{frame}{Common commands}
+        \begin{itemize}
+            \item docker run
+            \item docker build
+            \item docker kill
+            \item docker rm
+            \item docker exec
+            \item docker cp
+            \item docker diff
+        \end{itemize}
+    \end{frame}
     \begin{frame}{The Dockerfile}
         % The emphasis here is creating a reproducible environment
         \alert<+>{}
         \alert<+>{FROM ubuntu:14.10\\}
         \alert<+>{RUN apt-get update \&\& apt-get install -y php5-fpm\\}
-        \alert<+>{CMD /usr/sbin/php5-fpm --nodaemonize\\}
+        \alert<+>{CMD /usr/sbin/php5-fpm $--$nodaemonize\\}
     \end{frame}
     \begin{frame}{Building the Dockerfile}
         docker build -t php5-fpm .
@@ -85,6 +103,13 @@
         % This is essential for development environments
         % Keep this high level use the same image
         % Talk about this being incorporated into docker
+    \end{frame}
+    \begin{frame}{Installation}
+        \href{http://www.fig.sh/install.html}{http://www.fig.sh/install.html}
+        \begin{itemize}
+            \item One line installer
+            \item Compatible with boot2docker
+        \end{itemize}
     \end{frame}
     \subsection{}
     \defverbatim[colored]\lstFigYmlNginx{
@@ -136,8 +161,8 @@ mysql:
         \end{itemize}
     \end{frame}
     % Give a full demo of an nginx, php-fpm, mysql system
-    \section{Docker in production}
-    \subsection{}
+    \section{Appendix}
+    \subsection{Docker in production}
     \begin{frame}{Modifications}
         \begin{itemize}
             \item $ADD$ code instead of mounting as a volume.
