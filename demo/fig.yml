@@ -11,6 +11,7 @@ phpfpm:
     image: jprjr/php-fpm
     volumes:
         - .:/srv/http
+        - timezone.ini:/etc/php/conf.d/timezone.ini
     links:
         - mysql:mysql
 

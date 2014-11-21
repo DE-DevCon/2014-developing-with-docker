@@ -25,8 +25,6 @@ try {
     die();
 }
 
-mysql_close($mysql);
-
 ?>
 <!DOCTYPE html>
 <html>
