@@ -1,7 +1,5 @@
 nginx:
     build: .
-    volumes:
-        - .:/usr/local/nginx/html
     links:
         - phpfpm:phpfpm
     ports:
@@ -13,9 +11,9 @@ phpfpm:
         - .:/srv/http
         - timezone.ini:/etc/php/conf.d/timezone.ini
     links:
-        - mysql:mysql
+        - db:mysql
 
-mysql:
+db:
     image: mysql
     environment:
         MYSQL_ROOT_PASSWORD: password
