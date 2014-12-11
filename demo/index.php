@@ -7,16 +7,23 @@ $table = 'demoTable';
 
 $results = [];
 try {
+    // Connect to database
     $handler = new PDO("mysql:host={$hostname}", $username, $password);
+
+    // Create the database and table if they don't already exist
     $query = $handler->prepare("create database {$database}");
     $query->execute();
     $query = $handler->prepare("use {$database}");
     $query->execute();
     $query = $handler->prepare("create table ${database}(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, time INT)");
     $query->execute();
+
+    // Insert a new row with the current time
     $time = (int)microtime(true);
     $query = $handler->prepare("insert into {$database} (time) values ({$time})");
     $query->execute();
+
+    // Fetch all rows
     $query = $handler->prepare("select * from ${database}");
     $query->execute();
     $results = $query->fetchAll();
