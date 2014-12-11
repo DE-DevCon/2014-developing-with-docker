@@ -1,4 +1,4 @@
-docker ps -a|awk '{print $1}'|grep -v CONTAINER|xargs docker rm -f #Remove all running images
+docker ps -aq | xargs docker rm -f #Remove all running images
 
 docker build -t my-nginx .
 
