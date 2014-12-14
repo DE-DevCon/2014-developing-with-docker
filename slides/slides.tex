@@ -85,8 +85,8 @@
     \begin{frame}{The Dockerfile}{Reduce image size}
         FROM base/archlinux\\
         \only<+>{RUN curl http://\dots/solr-4.10.2.tgz $>$ solr-4.10.2.tgz\\RUN tar -xz solr-4.10.2.tgz\\RUN rm solr-4.10.2.tgz}
-        \only<+>{RUN curl http://\dots/solr-4.10.2.tgz $>$ solr-4.10.2.tgz; $\backslash$\\tar -xz solr-4.10.2.tgz; $\backslash$\\rm solr-4.10.2.tgz}
-    \only<+>{RUN curl http://\dots/solr-4.10.2.tgz $|$ tar -xz}
+    \only<+>{RUN curl http://\dots/solr-4.10.2.tgz $>$ solr-4.10.2.tgz $\&\&$ $\backslash$\\tar -xz solr-4.10.2.tgz $\&\&$ $\backslash$\\rm solr-4.10.2.tgz}
+        \only<+>{RUN curl http://\dots/solr-4.10.2.tgz $|$ tar -xz}
     \end{frame}
     \begin{frame}{Building the Dockerfile}
         docker build -t my-nginx .
@@ -172,7 +172,7 @@ db:
         \lstFigYmlPhpFpm
     \end{frame}
     \begin{frame}{How to build a group}
-        docker build -t my-nginx .
+        docker build -t my-nginx .\\
         docker run $-$d $--$link phpfpm:phpfpm $-$p 80:80 my-nginx\\
         \lstFigYmlNginx
     \end{frame}
@@ -192,7 +192,7 @@ db:
         \begin{itemize}
             \item $ADD$ code instead of mounting as a volume.
             \item Only use images that don't run as root.
-            \item Use Docker Hub (or host your own)
+            \item Use \href{https://registry.hub.docker.com/}{Docker Hub} (or host your own)
         \end{itemize}
     \end{frame}
     \subsection{Alternatives}
